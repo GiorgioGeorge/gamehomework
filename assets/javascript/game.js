@@ -1,34 +1,62 @@
-//array containing letters of then alphabet should probably include notice or alert to make sure guesses are entered in lowercase
-var letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
-
-//variables for win and loss tracking
-var numberOfWins = 0;
-var numberOfLosses = 0;
-var guessesLeft = 10;
-
-//letter randomizer
-var computerLetter = letters[Math.floor(Math.random() * letters.length)];
-console.log(computerLetter);
+//Variables
+var letters = "abcdefghijklmnopqrstuvwxyz";
+var randomLetter = randomLetter;
+var won = 0;
+var lost = 0;
+var attempts = 10;
+var usedArray = [];
 
 
 
-document.onkeypress = function(event){
-    var userLetter = event.key;
+//random letter generator random letter generator
+randomLetter = letters[Math.floor(Math.random() * letters.length)];
+console.log(randomLetter);
 
-    if(userLetter === computerLetter){
-        numberOfWins++;
-        alert("YOU WIN!");
-    }
-    else{
-        guessesLeft--;
-        alert("INCORRECT GUESS!")
-    }
-    if(guessesLeft = 0){
-        numberOfLosses++;
-        alert("TOO MANY INCORRECT GUESSES! YOU LOSE!")
-    }
+
+function computerGuess() {
+      randomLetter = letters[Math.floor(Math.random() * letters.length)];
+      console.log(randomLetter);
 
 }
-    document.getElementById("numberOfWins").innerHTML = "Number of Wins: " + numberOfWins;
-    document.getElementById("numberOfLosses").innerHTML = "Number of Losses: " + numberOfLosses;
-    document.getElementById("guessesLeft").innerHTML= "Guesses Left: " + guessesLeft;
+//event key
+document.onkeyup = function (event) {
+      var playerGuess = event.key;
+
+      //game logic
+      if (playerGuess === randomLetter) {
+            won++;
+            attempts = 10;
+            usedArray = [];
+            alert("WINNER! YOU WIN!")
+
+      }
+      
+      computerGuess();
+      if (playerGuess !== randomLetter) {
+            attempts--;
+
+      }
+
+      if (attempts == 0) {
+            lost++;
+            usedArray = []
+            attempts = 10;
+            alert("YOU LOSE! LOSER!")
+      }
+
+
+      if (usedArray.indexOf(playerGuess) >= 0) {
+
+      } else {
+
+            usedArray.push(playerGuess);
+            document.getElementById('playerGuess').innerHTML = usedArray;
+            console.log(usedArray);
+
+      }
+      //OUTPUT TO HTML
+      document.getElementById('hoomanWins').innerHTML = won;
+      document.getElementById('compooterWins').innerHTML = lost;
+      document.getElementById('guessesLeft').innerHTML = attempts;
+
+}
